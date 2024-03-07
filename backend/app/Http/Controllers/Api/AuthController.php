@@ -7,6 +7,7 @@ use App\Models\Societie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -36,6 +37,10 @@ class AuthController extends Controller
         Societie::where('id_card_number', $request->id_card_number)->first()->update(['login_tokens' => $token]);
 
         $result = Societie::where('id_card_number', $request->id_card_number);
+
+        // set id societie
+        Session::put('id', $result->first()->id);
+
         $res = [
             "name" => $result->first()->name,
             "born_date" => $result->first()->born_date,
@@ -63,6 +68,8 @@ class AuthController extends Controller
         if(count($resultGet->get()) === 0) {
             return response()->json(['message' => 'Invalid Token'], 401);
         }
+
+        $request->session()->forget('id');
 
         Societie::where('login_tokens', $request->query('token'))->update(['login_tokens' => null]);
 
