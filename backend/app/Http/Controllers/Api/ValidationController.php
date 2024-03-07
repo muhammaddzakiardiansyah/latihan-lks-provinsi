@@ -14,35 +14,27 @@ class ValidationController extends Controller
 {
     public function validation(Request $request)
     {
-        if(!$request->query('token'))
-        {
-            return response()->json(['message' => 'Unauthorized user'], 400);
-        }
-        $societie = Societie::where('login_tokens', $request->query('token'));
-
         $validator = Validator::make($request->all(), [
             'work_experience' => 'required',
             'job_category_id' => 'required',
             'job_position' => 'required',
             'reason_accepted' => 'required',
         ]);
-
         if($validator->fails())
         {
             return response()->json($validator->errors(), 400);
         }
 
         try {
-            $create = Validation::create([
+            $request["society"]->validation()->create([
                 'work_experience' => $request->work_experience,
                 'job_category_id' => $request->job_category_id,
                 'job_position' => $request->job_position,
                 'reason_accepted' => $request->reason_accepted,
-                'society_id' => $societie->first()->id,
                 'status' => 'pending',
             ]);
             
-            Log::info($create->toSql());
+            // Log::info($create->toSql());
             return response()->json(['message' => 'Request data Validation sent successfull']);
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()],500);
@@ -52,18 +44,11 @@ class ValidationController extends Controller
 
     public function getValidation(Request $request)
     {
-        if(!$request->query('token'))
+        $data = $request["society"]->validation()->where('status', 'accepted')->first();
+        if(!$data)
         {
-            return response()->json(['message' => 'Unauthorized user'], 401);
+            return response()->json(['message' => 'Data Not Found'], 404);
         }
-
-        $societie = Societie::where('login_tokens', $request->query('token'));
-
-        try {
-            $validation = Validation::where('society_id', $societie->first()->id);
-            return response()->json($validation->first(), 200);
-        } catch (\Throwable $th) {
-            return response()->json(['error' => $th->getMessage()],500);
-        }
+        return response()->json(["validation" => $data], 200);
     }
 }

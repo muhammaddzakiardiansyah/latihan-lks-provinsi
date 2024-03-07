@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
 
         'api-session' => [
             \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\CheckToken::class,
         ],
     ];
 

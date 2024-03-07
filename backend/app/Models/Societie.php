@@ -16,4 +16,9 @@ class Societie extends Model
     {
         return $this->belongsTo(Region::class, 'regional_id', 'id');
     }
+
+    public function validation()
+    {
+        return $this->hasMany(Validation::class, 'society_id', 'id');
+    }
 }
