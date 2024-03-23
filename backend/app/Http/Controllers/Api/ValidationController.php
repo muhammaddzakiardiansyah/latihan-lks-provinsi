@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Societie;
-use App\Models\Validation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 class ValidationController extends Controller
 {
@@ -49,6 +45,18 @@ class ValidationController extends Controller
         {
             return response()->json(['message' => 'Data Not Found'], 404);
         }
-        return response()->json(["validation" => $data], 200);
+        return response()->json([
+            "validation" => [
+                "id" => $data->id,
+                "status" => $data->status,
+                "work_experience" => $data->work_experience,
+                "job_category_id" => $data->job_category_id,
+                "job_position" => $data->job_position,
+                "reason_accepted" => $data->reason_accepted,
+                "validator_notes" => $data->validator_notes,
+                "validator" => $data->validator,
+            ]], 
+            200
+        );
     }
 }
