@@ -43,6 +43,7 @@ Route::controller(AuthController::class)->middleware('api-session')->group(funct
 Route::controller(JobVacancyController::class)->middleware('api-session')->group(function()
 {
     Route::get('/job_vacancies', 'getAllJobVacancy')->name('get all job vacancies');
+    Route::get('/job_vacancies/{jobVacancyId}', 'getDetailJobVacancy')->name('get detail job vacancy');
 });
 
 // Route::get('/user/{name?}/{id?}', function(?string $name = null, ?string $id = null)

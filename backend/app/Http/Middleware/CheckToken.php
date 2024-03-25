@@ -18,7 +18,7 @@ class CheckToken
     {
         if(!$request->filled('token'))
         {
-            return response()->json(['message' => 'Unauthorized user'], 400);
+            return response()->json(['message' => 'Unauthorized user'], 401);
         }
         $data = Societie::where('login_tokens', $request->query('token'))->first();
         if(!$data)
