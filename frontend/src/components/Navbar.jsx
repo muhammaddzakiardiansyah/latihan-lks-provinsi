@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
-  const token = localStorage.getItem("token");
+  const name = localStorage.getItem("name");
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
       <div className="container">
@@ -20,19 +20,21 @@ export const Navbar = () => {
 
         <div className="collapse navbar-collapse" id="navbarsExampleDefault">
           <ul className="navbar-nav ml-auto">
-            {token ? (
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    Marsito Kusmawati
-                  </a>
+            {name ? (
+              <>
+                <li className="nav-item">
+                  <p className="nav-link">
+                    {name}
+                  </p>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
+                <li className="nav-item">
+                  <Link to={"/logout"}>
+                  <p className="nav-link">
                     Logout
-                  </a>
+                  </p>
+                  </Link>
                 </li>
-              </ul>
+              </>
             ) : (
               <li className="nav-item">
                 <Link to={"/login"}>

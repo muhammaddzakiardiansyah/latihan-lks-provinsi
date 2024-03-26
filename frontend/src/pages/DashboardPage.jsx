@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 
@@ -24,14 +25,16 @@ export const DashboardPage = () => {
                   <h5 className="mb-0">Data Validation</h5>
                 </div>
                 <div className="card-body">
+                  <Link to={"/create-validation"}>
                   <p className="btn btn-primary btn-block">
                     + Request validation
                   </p>
+                  </Link>
                 </div>
               </div>
             </div>
 
-            <div className="col-md-4">
+            {/* <div className="col-md-4">
               <div className="card card-default">
                 <div className="card-header border-0">
                   <h5 className="mb-0">Data Validation</h5>
@@ -105,7 +108,7 @@ export const DashboardPage = () => {
                   </table>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </section>
 
@@ -115,11 +118,11 @@ export const DashboardPage = () => {
               <div className="col-md-8">
                 <h4 className="section-title text-muted">My Job Applications</h4>
               </div>
-              <div className="col-md-4">
+              {/* <div className="col-md-4">
                 <a href="" className="btn btn-primary btn-lg btn-block">
                   + Add Job Applications
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="section-body">
@@ -130,7 +133,7 @@ export const DashboardPage = () => {
                 </div>
               </div>
 
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <div className="card card-default">
                   <div className="card-header border-0">
                     <h5 className="mb-0">PT. Maju Mundur Sejahtera</h5>
@@ -212,7 +215,7 @@ export const DashboardPage = () => {
                     </table>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </section>
