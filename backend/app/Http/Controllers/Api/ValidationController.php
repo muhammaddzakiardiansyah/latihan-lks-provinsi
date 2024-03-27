@@ -40,21 +40,22 @@ class ValidationController extends Controller
 
     public function getValidation(Request $request)
     {
-        $data = $request["society"]->validation()->where('status', 'accepted')->first();
+        $data = $request["society"]->validation()->with(['validators', 'jobCategories'])->where('status', 'accepted')->first();
         if(!$data)
         {
             return response()->json(['message' => 'Data Not Found'], 404);
         }
+
         return response()->json([
             "validation" => [
                 "id" => $data->id,
                 "status" => $data->status,
                 "work_experience" => $data->work_experience,
-                "job_category_id" => $data->job_category_id,
+                "job_category" => $data->jobCategories->job_category,
                 "job_position" => $data->job_position,
                 "reason_accepted" => $data->reason_accepted,
                 "validator_notes" => $data->validator_notes,
-                "validator" => $data->validator,
+                "validator" => $data->validators[0]->name,
             ]], 
             200
         );

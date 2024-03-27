@@ -17,9 +17,10 @@ export const DataValidationPage = () => {
       const token = localStorage.getItem("token");
       const url = `http://localhost:8000/api/v1/validations?token=${token}`;
       const response = await axios.post(url, data);
-      console.log(response);
+      alert(response.data.message);
+      location.href = '/dashboard';
     } catch (error) {
-      console.log(error);
+      alert(error.response.data.message);
     }
   }
   return (

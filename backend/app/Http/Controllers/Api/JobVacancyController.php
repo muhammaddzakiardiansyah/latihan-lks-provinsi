@@ -16,17 +16,31 @@ class JobVacancyController extends Controller
         $societyId = $request['society']->id;
         $resultSociety = Validation::where('society_id', $societyId)->first();
 
-        $result = JobVacancy::with(['availableJobs', 'categoryJobs'])->where('job_category_id', $resultSociety->job_category_id)->first();
+        $result = JobVacancy::with(['availableJobs', 'categoryJobs'])->where('job_category_id', $resultSociety->job_category_id)->get();
+
+        foreach($result[0]->availableJobs as $availableJob)
+        {
+            $data[] = [
+                "position" => $availableJob->position,
+                "capacity" => $availableJob->capacity,
+                "appaly_capacity" => $availableJob->apply_capacity,
+            ];
+        };
+
+        foreach($result as $res)
+        {
+            $dataJob[] = [
+                "id" => $res->id,
+                "category" => $res->categoryJobs,
+                "company" => $res->company,
+                "address" => $res->address,
+                "description" => $res->description,
+                "available_position" => $data,
+            ];
+        };
 
         return response()->json([
-            "vacancies" => [
-                "id" => $result->id,
-                "category" => $result->categoryJobs,
-                "company" => $result->company,
-                "address" => $result->address,
-                "description" => $result->description,
-                "available_position" => [["position" => $result->availableJobs[0]->position]]
-            ],
+            "vacancies" => $dataJob
         ]);
     }
 
